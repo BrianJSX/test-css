@@ -12,7 +12,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VectorBgDirective } from './vector-bg.directive';
 import { DashBoardComponent } from './components/dash-board/dash-board.component';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './module/auth/page/login/login.component';
+import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
+import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 
 registerLocaleData(en);
 
@@ -21,7 +23,9 @@ registerLocaleData(en);
     AppComponent,
     VectorBgDirective,
     DashBoardComponent,
-    LoginComponent
+    LoginComponent,
+    AuthLayoutComponent,
+    MainLayoutComponent
   ],
   imports: [
     BrowserModule,
