@@ -1,0 +1,52 @@
+<div class="login__pengiun">
+  <div class="login__pengiun__logo">
+    <img
+      class="login__pengiun__logo--image"
+      src="./assets/images/logo-penguin.png"
+      alt=""
+    />
+  </div>
+  <div class="login__pengiun__action">
+    <div class="login__pengiun__action__button">
+      <button
+        nz-button
+        nzSize="large"
+        class="login__pengiun__action__button--bsc"
+      >
+        <span
+          style="
+            background-color: white;
+            color: black;
+            border-radius: 50%;
+            line-height: 8px;
+            padding: 5px;
+            text-align: center;
+          "
+          >1</span
+        >
+        Login by BSC Account
+      </button>
+      <button
+        nz-button
+        nzSize="large"
+        class="login__pengiun__action__button--non"
+      >
+        Non BSC Account
+      </button>
+    </div>
+  </div>
+  <div class="login__pengiun__chooseLanguage">
+    <div class="login__pengiun__chooseLanguage--text">Choose Language</div>
+    <div class="login__pengiun__chooseLanguage--choose">
+      <nz-select
+        [(ngModel)]="selectedValue"
+        nzSize="large"
+        nzBorderless="true"
+        class="login__pengiun__chooseLanguage--select"
+      >
+        <nz-option nzValue="english" nzLabel="English"></nz-option>
+        <nz-option nzValue="japanese" nzLabel="Japanese"></nz-option>
+      </nz-select>
+    </div>
+  </div>
+</div>
