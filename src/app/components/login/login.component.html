@@ -1,0 +1,61 @@
+<div class="wraper">
+  <div class="login">
+    <div class="login__main">
+      <div class="login__logo">
+        <img
+          class="login__logo--image"
+          src="./assets/images/logo.png"
+          width="320px"
+          height="225px"
+          alt=""
+        />
+      </div>
+      <div class="login__text">LOGIN AS COMPLAINT USER</div>
+      <div class="login__border"></div>
+      <hr />
+      <div class="login__form">
+        <div class="login__form__children">
+          <label><span style="color: red">* </span>Username</label>
+          <input class="login__form__input" type="text" />
+        </div>
+        <div class="login__form__children">
+          <label><span style="color: red">* </span>Password</label>
+          <input class="login__form__input" type="password" #inputPass />
+          <span class="login__form__eye" *ngIf="inputPass.type == 'password'" (click)="inputPass.type = 'text'"
+            ><i class="fa fa-eye" aria-hidden="true"></i
+          ></span>
+          <span *ngIf="inputPass.type == 'text'" class="login__form__eye" (click)="inputPass.type = 'password'">
+            <i class="fa fa-eye-slash" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div class="login__form__button">
+          <button class="login__form__button--back">
+            <span style="margin-right: 10px">
+              <i class="fa-solid fa-arrow-left-long"></i>
+            </span>
+            Back
+          </button>
+          <button class="login__form__button--login">
+            Login
+            <span style="margin-left: 10px">
+              <i class="fa-solid fa-arrow-right"></i>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="login__vector">
+      <div class="login__vector__left">
+        <div class="login__vector__left--one"></div>
+        <div class="login__vector__left--two"></div>
+        <div class="login__vector__left--three"></div>
+      </div>
+      <div class="login__vector__right">
+        <div class="login__vector__right--one"></div>
+        <div class="login__vector__right--two"></div>
+        <div class="login__vector__right--three"></div>
+        <div class="login__vector__right--four"></div>
+      </div>
+    </div>
+  </div>
+</div>

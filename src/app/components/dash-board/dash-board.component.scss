@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;700&display=swap");
+
+.dashboard {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  &__sider {
+    width: 5%;
+    height: 100%;
+  }
+  &__content {
+    width: 95%;
+  }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #def1ff;
+    padding: 5px;
+    &__avatar {
+      border-radius: 50%;
+      overflow:hidden;
+      border: 1px solid gray;
+    }
+    &__notifycation{
+      position: relative;
+      &--number  {
+        position: absolute;
+        padding: 4px;
+        border-radius: 50%;
+        top: 0;
+        right: 0;
+        background-color: red;
+      }
+    }
+  }
+  &__header__left {
+    display: flex;
+    align-items: center;
+    width: 30%;
+  }
+  &__header__left--icon {
+    margin-right: 20px;
+  }
+  &__header__left--text {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #004072 !important;
+  }
+  &__header__right {
+    width: 15%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
