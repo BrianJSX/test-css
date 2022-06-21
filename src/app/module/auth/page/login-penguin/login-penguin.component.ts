@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { CookieStorage } from 'src/app/core/utils/cookie';
 
 @Component({
   selector: 'app-login-penguin',
@@ -13,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./login-penguin.component.scss'],
 })
 export class LoginPenguinComponent implements OnInit {
-  selectedValue = 'en';
+  selectedValue = this.cookieStorage.getCookie("lang") || 'en';
   borderActive = false;
   stepOne = true;
   disable = true;
@@ -33,20 +34,19 @@ export class LoginPenguinComponent implements OnInit {
     }
   }
 
-  constructor(private fb: FormBuilder, private translate: TranslateService) {
-    translate.use(localStorage.getItem('lang') || 'en');
+  constructor(private fb: FormBuilder, private translate: TranslateService, private cookieStorage: CookieStorage) {
+    translate.use(cookieStorage.getCookie('lang') || 'en');
   }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      userName: [null, [Validators.required]],
+      username: [null, [Validators.required]],
       password: [null, [Validators.required]],
-      remember: [true],
     });
   }
 
   handleChangeInput() {
-    let username = this.validateForm.controls['userName'].value;
+    let username = this.validateForm.controls['username'].value;
     let password = this.validateForm.controls['password'].value;
     if (username && password) {
       this.disable = false;
@@ -55,8 +55,8 @@ export class LoginPenguinComponent implements OnInit {
     }
   }
   handleChangeLanguage(e: Event) {
-    localStorage.setItem('lang', e.toString());
-    this.translate.use(localStorage.getItem('lang') || 'en');
+    this.cookieStorage.setCookie("lang", e.toString());
+    this.translate.use(this.cookieStorage.getCookie("lang") || 'en');
   }
 
   handleStep() {

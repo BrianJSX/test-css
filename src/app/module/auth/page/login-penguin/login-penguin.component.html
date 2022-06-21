@@ -56,9 +56,9 @@
           (ngSubmit)="submitForm()"
         >
           <div class="login__pengiun__action__form--form-group">
-            <div style="font-size: 14px; color: #163b6d">
+            <label LabelDirective [rq_value]="true" style="font-size: 14px; color: #163b6d">
               {{ "User Name" | translate }}
-            </div>
+            </label>
             <nz-form-item>
               <nz-form-control
                 nzErrorTip="{{ 'Please input your username' | translate }}"
@@ -69,7 +69,7 @@
                     type="text"
                     nz-input
                     (ngModelChange)="handleChangeInput()"
-                    formControlName="userName"
+                    formControlName="username"
                     placeholder="{{ 'User Name' | translate }}"
                   />
                 </nz-input-group>
@@ -77,9 +77,9 @@
             </nz-form-item>
           </div>
           <div class="login__pengiun__action__form--form-group">
-            <div style="font-size: 14px; color: #163b6d">
+            <label LabelDirective style="font-size: 14px; color: #163b6d">
               {{ "Password" | translate }}
-            </div>
+            </label>
             <nz-form-item>
               <nz-form-control
                 nzErrorTip="{{ 'Please input your Password' | translate }}"

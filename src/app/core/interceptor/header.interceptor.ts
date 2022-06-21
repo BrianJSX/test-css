@@ -8,19 +8,20 @@ import {
 } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 
 @Injectable()
 export class HeaderInterceptor implements HttpInterceptor {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    // req = req.clone({
-    //   setHeaders: this.authService.getAuthorizationHeaders(),
-    // });
+    req = req.clone({
+      setHeaders: this.authService.getAuthorizationHeaders(),
+    });
 
     return next.handle(req).pipe(
       tap(event => {
@@ -34,4 +35,5 @@ export class HeaderInterceptor implements HttpInterceptor {
       })
     );
   }
+
 }

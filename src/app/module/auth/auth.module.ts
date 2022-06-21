@@ -10,13 +10,14 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LabelDirective } from './page/login-penguin/directives/label.directive';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
 @NgModule({
-  declarations: [LoginPenguinComponent],
+  declarations: [LoginPenguinComponent, LabelDirective],
   imports: [
     CommonModule,
     AuthRoutingModule,
