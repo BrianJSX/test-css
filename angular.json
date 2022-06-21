@@ -81,7 +81,8 @@
               "browserTarget": "my-app:build:production"
             },
             "development": {
-              "browserTarget": "my-app:build:development"
+              "browserTarget": "my-app:build:development",
+              "port": 8169
             }
           },
           "defaultConfiguration": "development"

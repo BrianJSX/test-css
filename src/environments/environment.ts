@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_URL: "https://penguin-qa.demoapp.info/"
+  API_URL: "https://penguin-qa-api.demoapp.info"
 };
 
 /*
