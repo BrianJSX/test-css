@@ -4,20 +4,35 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { LoginPenguinComponent } from './page/login-penguin/login-penguin.component';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
-  declarations: [
-    LoginPenguinComponent
-  ],
+  declarations: [LoginPenguinComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
     NzButtonModule,
     NzSelectModule,
-    FormsModule
-  ]
+    FormsModule,
+    NzFormModule,
+    ReactiveFormsModule,
+    NzInputModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}

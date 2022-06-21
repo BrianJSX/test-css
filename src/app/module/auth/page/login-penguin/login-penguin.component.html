@@ -7,7 +7,11 @@
     />
   </div>
   <div class="login__pengiun__action">
-    <div class="login__pengiun__action__button">
+    <div
+      [class.centerToLeft]="!stepOne"
+      [class.leftToCenter]="stepOne"
+      class="login__pengiun__action__button"
+    >
       <button
         nz-button
         nzSize="large"
@@ -24,28 +28,143 @@
           "
           >1</span
         >
-        Login by BSC Account
+        {{ "Login by BSC Account" | translate }}
       </button>
       <button
         nz-button
         nzSize="large"
         class="login__pengiun__action__button--non"
+        (click)="handleStep()"
       >
-        Non BSC Account
+        {{ "Non BSC Account" | translate }}
       </button>
+    </div>
+    <div
+      [class.centerToRight]="stepOne"
+      [class.rightToCenter]="!stepOne"
+      class="login__pengiun__action__form"
+    >
+      <div class="login__pengiun__action__form--login">
+        <div class="login__pengiun__action__form--title">
+          {{ "NON BSC ACCOUNT" | translate }}
+        </div>
+
+        <form
+          nz-form
+          [formGroup]="validateForm"
+          class="login-form"
+          (ngSubmit)="submitForm()"
+        >
+          <div class="login__pengiun__action__form--form-group">
+            <div style="font-size: 14px; color: #163b6d">
+              {{ "User Name" | translate }}
+            </div>
+            <nz-form-item>
+              <nz-form-control
+                nzErrorTip="{{ 'Please input your username' | translate }}"
+              >
+                <nz-input-group>
+                  <input
+                    class="login__pengiun__action__form--input"
+                    type="text"
+                    nz-input
+                    (ngModelChange)="handleChangeInput()"
+                    formControlName="userName"
+                    placeholder="{{ 'User Name' | translate }}"
+                  />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div class="login__pengiun__action__form--form-group">
+            <div style="font-size: 14px; color: #163b6d">
+              {{ "Password" | translate }}
+            </div>
+            <nz-form-item>
+              <nz-form-control
+                nzErrorTip="{{ 'Please input your Password' | translate }}"
+              >
+                <nz-input-group>
+                  <input
+                    class="login__pengiun__action__form--input"
+                    type="password"
+                    nz-input
+                    #inputPass
+                    (ngModelChange)="handleChangeInput()"
+                    formControlName="password"
+                    placeholder="{{ 'Password' | translate }}"
+                  />
+                  <span
+                    class="login__pengiun__action__form--icon"
+                    *ngIf="inputPass.type == 'password'"
+                    (click)="inputPass.type = 'text'"
+                    ><i class="fa fa-eye" aria-hidden="true"></i
+                  ></span>
+                  <span
+                    *ngIf="inputPass.type == 'text'"
+                    class="login__pengiun__action__form--icon"
+                    (click)="inputPass.type = 'password'"
+                  >
+                    <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                  </span>
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div class="login__pengiun__action__form__button">
+            <button
+              type="button"
+              nz-button
+              class="login__pengiun__action__form__button--back"
+              nzShape="round"
+              (click)="handleStep()"
+            >
+              {{ "Back" | translate }}
+            </button>
+            <button
+              *ngIf="!disable"
+              nz-button
+              class="login__pengiun__action__form__button--login"
+              nzShape="round"
+            >
+              {{ "Login" | translate }}
+            </button>
+            <button
+              *ngIf="disable"
+              [disabled]="disable"
+              nz-button
+              class="login__pengiun__action__form__button--loginDisable"
+              nzShape="round"
+            >
+              {{ "Login" | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
   <div class="login__pengiun__chooseLanguage">
-    <div class="login__pengiun__chooseLanguage--text">Choose Language</div>
+    <div class="login__pengiun__chooseLanguage--text">
+      {{ "Choose Language" | translate }}
+    </div>
     <div class="login__pengiun__chooseLanguage--choose">
       <nz-select
+        (nzFocus)="handleBorderActive()"
+        (nzBlur)="handleBorderBlur()"
         [(ngModel)]="selectedValue"
-        nzSize="large"
+        (ngModelChange)="handleChangeLanguage($event)"
         nzBorderless="true"
         class="login__pengiun__chooseLanguage--select"
+        [class.active]="borderActive"
       >
-        <nz-option nzValue="english" nzLabel="English"></nz-option>
-        <nz-option nzValue="japanese" nzLabel="Japanese"></nz-option>
+        <nz-option
+          nzValue="en"
+          nzLabel="{{ 'English' | translate }}"
+        ></nz-option>
+        <nz-option
+          nzValue="jp"
+          nzLabel="{{ 'Japanese' | translate }}"
+        ></nz-option>
       </nz-select>
     </div>
   </div>

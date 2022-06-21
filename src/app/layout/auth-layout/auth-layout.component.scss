@@ -21,7 +21,7 @@
     &__left {
       position: fixed;
       width: 100%;
-      height: 50%;
+      height: 37%;
       &--image {
         width: 100%;
         height: 100%;
@@ -48,6 +48,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        animation: heightMove 0.5s linear backwards ;
       }
     }
     &__background {
@@ -63,4 +64,9 @@
       height: 100%;
     }
   }
+}
+
+@keyframes heightMove {
+  from {height: 50%;}
+  to {height: 100%;}
 }
