@@ -66,7 +66,7 @@ export class LoginPenguinComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      username: [null, [Validators.required]],
+      username: [null, [Validators.required, this.spaceValidation]],
       password: [null, [Validators.required]],
     });
   }
@@ -96,4 +96,18 @@ export class LoginPenguinComponent implements OnInit {
   handleBorderBlur() {
     this.borderActive = false;
   }
+
+  spaceValidation = (control: FormControl): { [s: string]: boolean } => {
+    let space = /^\S+/;
+    let spaceEnd = /[^.\s]$/
+    if (!control.value) {
+      return { required: true };
+    }  else if (!control.value.match(space)) {
+      return { required: true };
+    }  else if (!control.value.match(spaceEnd)) {
+      return { required: true };
+    }
+    return {};
+  };
+
 }
