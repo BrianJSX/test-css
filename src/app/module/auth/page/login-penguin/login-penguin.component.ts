@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieStorage } from 'src/app/core/utils/cookie';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -21,22 +22,26 @@ export class LoginPenguinComponent implements OnInit {
   borderActive = false;
   stepOne = true;
   disable = true;
+  loading = false;
 
   validateForm!: FormGroup;
 
   submitForm(): void {
     if (this.validateForm.valid) {
+      this.loading = true;
       this.authService.login(this.validateForm.value).subscribe(
         (res) => {
+          this.loading = false;
           this.cookieStorage.setCookie(
             'token',
             res.data.access_token,
             res.data.expired_in
           );
-          alert("login success");
+          this.router.navigateByUrl('/choose-country');
         },
         (err) => {
-          console.log(err);
+          this.loading = false;
+          alert(err.message);
         }
       );
     } else {
@@ -53,7 +58,8 @@ export class LoginPenguinComponent implements OnInit {
     private fb: FormBuilder,
     private translate: TranslateService,
     private cookieStorage: CookieStorage,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     translate.use(cookieStorage.getCookie('lang') || 'en');
   }

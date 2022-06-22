@@ -2,20 +2,29 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
 import { LoginComponent } from './module/auth/page/login/login.component';
+import { AuthGuard } from './shared/guard/auth.guard';
+import { NoauthGuard } from './shared/guard/noauth.guard';
 
 const routes: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
+  // {
+  //   path: 'login',
+  //   component: LoginComponent,
+  // },
   {
     path: 'auth',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     component: AuthLayoutComponent,
     loadChildren: () =>
       import('./module/auth/auth.module').then((m) => m.AuthModule),
   },
-  { path: '**', redirectTo: 'login', pathMatch: 'full' },
+  {
+    path: 'choose-country',
+    canActivate: [NoauthGuard],
+    component: AuthLayoutComponent,
+    loadChildren: () =>
+      import('./module/country/country.module').then((m) => m.CountryModule),
+  },
+  { path: '**', redirectTo: 'auth/login-penguin', pathMatch: 'full' },
 ];
 
 @NgModule({

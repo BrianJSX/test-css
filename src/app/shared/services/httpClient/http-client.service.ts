@@ -1,4 +1,8 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -10,11 +14,7 @@ export class HttpClientService {
   constructor(private httpClient: HttpClient) {}
 
   handleError(error: HttpErrorResponse) {
-    if (error.error.statusDescription) {
-      return throwError(error.error.statusDescription);
-    } else {
-      return throwError(error.statusText);
-    }
+    return throwError(error.error);
   }
 
   getHttpClient(): HttpClient {
