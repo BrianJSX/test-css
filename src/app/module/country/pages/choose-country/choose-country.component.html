@@ -9,22 +9,49 @@
   <div class="country__title">
     <div class="country__title__children">
       <div class="country__title--border"></div>
-      <div class="country__title--text">{{"Select Country" | translate}}</div>
+      <div class="country__title--text">{{ "Select Country" | translate }}</div>
       <div class="country__title--border"></div>
     </div>
   </div>
   <div class="country__action">
     <div class="country__action__button">
-      <div *ngIf="countryHidden.indexOf('sg') == -1" class="country__action__button--country">
-        <img src="./assets/images/singapore.svg" alt="" />
+      <div
+        *ngIf="countryHidden.indexOf('sg') == -1"
+        class="country__action__button--country"
+      >
+        <img
+          class="country__action__button--text"
+          src="./assets/images/singapore.svg"
+          width="50px"
+          height="50px"
+          alt=""
+        />
         <div class="country__action__button--text">Singapore</div>
       </div>
-      <div *ngIf="countryHidden.indexOf('tw') == -1" class="country__action__button--country">
-        <img src="./assets/images/taiwan.svg" alt="" />
+      <div
+        *ngIf="countryHidden.indexOf('tw') == -1"
+        class="country__action__button--country"
+      >
+        <img
+          class="country__action__button--text"
+          src="./assets/images/taiwan.svg"
+          width="50px"
+          height="50px"
+          alt=""
+        />
         <div class="country__action__button--text">Taiwan</div>
       </div>
-      <div *ngIf="countryHidden.indexOf('my') == -1" class="country__action__button--country">
-        <img src="./assets/images/malaysia.png" width="50px" height="50px" alt="" />
+      <div
+        *ngIf="countryHidden.indexOf('my') == -1"
+        class="country__action__button--country"
+      >
+        <img
+          class="country__action__button--text"
+          src="./assets/images/malaysia.png"
+          width="50px"
+          height="50px"
+          alt=""
+        />
         <div class="country__action__button--text">Malaysia</div>
       </div>
     </div>
@@ -42,7 +69,9 @@
     </div>
   </div>
   <div class="country__footer">
-    <div class="country__footer--text">© Boston Scientific Corporation or its affiliates</div>
+    <div class="country__footer--text">
+      © Boston Scientific Corporation or its affiliates
+    </div>
     <div class="country__footer--text">All rights reserved</div>
   </div>
 </div>

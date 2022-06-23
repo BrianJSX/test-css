@@ -99,15 +99,17 @@ export class LoginPenguinComponent implements OnInit {
 
   spaceValidation = (control: FormControl): { [s: string]: boolean } => {
     let space = /^\S+/;
-    let spaceEnd = /[^.\s]$/
+    let spaceCenter = /\s+/;
+    let spaceEnd = /[^.\s]$/;
     if (!control.value) {
       return { required: true };
-    }  else if (!control.value.match(space)) {
+    } else if (!control.value.match(space)) {
       return { required: true };
-    }  else if (!control.value.match(spaceEnd)) {
+    } else if (!control.value.match(spaceEnd)) {
+      return { required: true };
+    } else if (control.value.match(spaceCenter)) {
       return { required: true };
     }
     return {};
   };
-
 }
