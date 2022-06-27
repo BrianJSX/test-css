@@ -1,10 +1,9 @@
 <nz-layout class="dashboard">
-  <nz-sider
-    nzWidth="250px"
+  <div
     class="dashboard__sider"
+    #refSider
+    style="width: 250px"
     [class.show]="isCollapsedMobile"
-    nzCollapsible
-    [nzTrigger]="null"
   >
     <div class="dashboard__logo">
       <img
@@ -33,7 +32,7 @@
         <span>File</span>
       </li>
     </ul>
-  </nz-sider>
+  </div>
   <nz-layout>
     <div
       [class.rotateIconHam]="isCollapsedMobile"
@@ -161,17 +160,19 @@
           </div>
           <div class="dashboard__header__mobile__menu__left--string">
             <span class="dashboard__header__mobile__menu___left--text">
-              Administrator
+              {{ userProfile?.data?.fullName }}
             </span>
           </div>
         </div>
         <div class="dashboard__header__mobile__menu__left--children">
           <div class="dashboard__header__mobile__menu__left--icon">
-            <div class="dashboard__header__right__avatar--nzAvatar">A</div>
+            <div class="dashboard__header__right__avatar--nzAvatar">
+              {{ userProfile?.data?.fullName?.substring(0, 1) }}
+            </div>
           </div>
           <div class="dashboard__header__mobile__menu__left--string">
             <span class="dashboard__header__mobile__menu___left--text">
-              Administrator
+              {{ userProfile?.data?.fullName }}
             </span>
           </div>
         </div>
@@ -241,14 +242,145 @@
             <nz-option nzValue="1x" nzLabel="Japan"></nz-option>
           </nz-select>
         </div>
-        <div class="dashboard__header__right__bell">
+        <button
+          nz-popover
+          [(nzPopoverVisible)]="openNotifycation"
+          nzPopoverTrigger="click"
+          [nzPopoverContent]="contentTemplate"
+          nzPopoverPlacement="bottomRight"
+          class="dashboard__header__right__bell buttonTranparent"
+        >
           <svg class="icon icon-home">
             <use xlink:href="/assets/all.svg#bell"></use>
           </svg>
-          <div class="dashboard__header__right__bell__notification">10</div>
-        </div>
+          <div
+            *ngIf="countNotiUnRead != 0"
+            class="dashboard__header__right__bell__notification"
+          >
+            {{ countNotiUnRead }}
+          </div>
+        </button>
+        <ng-template #contentTemplate>
+          <div class="dashboard-notification">
+            <div class="dashboard-notification-title">
+              <div class="dashboard-notification-title-left">
+                <h2 class="dashboard-notification-title-text">Notifycation</h2>
+                <div class="dashboard-notification-title-icon">
+                  <i nz-icon nzType="sync" nzTheme="outline"></i>
+                </div>
+              </div>
+              <div class="dashboard-notification-title-right">
+                <svg class="icon" style="width: 15px; cursor: pointer">
+                  <use xlink:href="/assets/all.svg#hamburger"></use>
+                </svg>
+              </div>
+            </div>
+            <div class="dashboard-notification-action">
+              <button
+                [class.activeNoti]="activeNotify == 1"
+                (click)="handleNotifycationAll()"
+                class="dashboard-notification-button"
+              >
+                All
+              </button>
+              <button
+                [class.activeNoti]="activeNotify == 2"
+                (click)="handleNotifycationRead()"
+                class="dashboard-notification-button"
+              >
+                Read
+              </button>
+              <button
+                [class.activeNoti]="activeNotify == 3"
+                (click)="handleNotifycationUnRead()"
+                class="dashboard-notification-button"
+              >
+                Unread
+              </button>
+            </div>
+            <div
+              class="dashboard-notification-message"
+              infiniteScroll
+              (scrolled)="onScroll()"
+              [immediateCheck]="true"
+              [scrollWindow]="false"
+              #refScrollNoti
+            >
+              <!-- Message -->
+              <div
+                *ngFor="let notifyItem of notification?.data"
+                class="dashboard-notification-message-children"
+              >
+                <div class="dashboard-notification-message-left">
+                  <nz-badge
+                    *ngIf="!notifyItem.hasAlreadyRead"
+                    style="margin: 22px 10px 0 0"
+                    nzColor="#108ee9"
+                  ></nz-badge>
+                  <span
+                    *ngIf="notifyItem.hasAlreadyRead"
+                    style="margin: 22px 10px 0 0; padding: 5px"
+                  ></span>
+                </div>
+                <div class="dashboard-notification-message-right">
+                  <div class="dashboard-notification-message-content">
+                    {{ notifyItem.title }}
+                  </div>
+                  <div class="dashboard-notification-message-date">
+                    {{ notifyItem.createdDate | date: "dd/MM/YYYY hh:mm:ss a" }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+
         <div class="dashboard__header__right__avatar">
-          <div class="dashboard__header__right__avatar--nzAvatar">A</div>
+          <button
+            #refAvatar
+            class="dashboard__header__right__avatar--nzAvatar buttonTranparent"
+            (click)="handleOpenProfile()"
+          >
+            {{ userProfile?.data?.fullName?.substring(0, 1) }}
+          </button>
+          <div *ngIf="openProfile" class="dashboard-userInfoAv" #refPopup>
+            <div class="dashboard-userInfoAv-header">
+              <span class="dashboard-userInfoAv-header--text">
+                Boston Scientific
+              </span>
+              <div class="dashboard-userInfoAv-header--signout">Sign out</div>
+            </div>
+            <div class="dashboard-userInfoAv-content">
+              <div class="dashboard-userInfoAv-content-left">
+                <div class="dashboard-userInfoAv__avatar" refAvatar>
+                  {{ userProfile?.data?.fullName?.substring(0, 1) }}
+                </div>
+              </div>
+              <div class="dashboard-userInfoAv-content-right">
+                <div class="dashboard-userInfoAv-content-right-username">
+                  {{ userProfile?.data?.fullName }}
+                </div>
+                <div class="dashboard-userInfoAv-content-right-text">
+                  {{ userProfile?.data?.email }}
+                </div>
+                <div class="dashboard-userInfoAv-content-right-text">
+                  <span style="margin-right: 5px">Role:</span>
+                  {{ userProfile?.data?.role?.name }}
+                </div>
+              </div>
+            </div>
+            <div class="dashboard-userInfoAv-footer">
+              <div class="dashboard-userInfoAv-footer--left"></div>
+              <div class="dashboard-userInfoAv-footer--right">
+                <div class="dashboard-userInfoAv-footer--text">
+                  Change password
+                </div>
+                <div class="dashboard-userInfoAv-footer--text">
+                  Switch account
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </nz-header>

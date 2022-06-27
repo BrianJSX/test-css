@@ -25,8 +25,10 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-
-
+import { PopupDirrectiveDirective } from './layout/main-layout/directive/popup-dirrective.directive';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { InfiniteScrollModule } from "ngx-infinite-scroll";
 
 
 registerLocaleData(en);
@@ -40,8 +42,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginComponent,
     AuthLayoutComponent,
     MainLayoutComponent,
+    PopupDirrectiveDirective,
   ],
   imports: [
+    InfiniteScrollModule,
     NzMenuModule,
     NzLayoutModule,
     NzBreadCrumbModule,
@@ -55,6 +59,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     NzSelectModule,
     NzAvatarModule,
     NzButtonModule,
+    NzPopoverModule,
+    NzBadgeModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

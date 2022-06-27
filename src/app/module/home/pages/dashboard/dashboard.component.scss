@@ -1,0 +1,102 @@
+.icon {
+  fill: black;
+  width: 35px;
+  height: 35px;
+}
+
+.dashboard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f2f5;
+  &-content {
+    background-color: #fff;
+    padding: 20px;
+    height: 100%;
+    margin: 20px;
+    border-radius: 10px;
+  }
+
+  &-title {
+    display: flex;
+    font-size: 14px;
+    color: #1a457b;
+    font-weight: 500;
+    border-bottom: 1px solid #dce6ef;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
+  &-penbox {
+    &--above {
+      display: inline-flex;
+      width: 100%;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      height: 20%;
+    }
+    &--down {
+      display: flex;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+  }
+
+  &-itemIcon {
+    width: 160px;
+    height: 130px;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid #dce6ef;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 0 10px 10px 0;
+    cursor: pointer;
+    &:hover {
+      border: 1px solid #1a457b99;
+    }
+  }
+
+  &-itemNoIcon {
+    width: 190px;
+    height: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 0 10px 10px 0;
+    cursor: pointer;
+    &:nth-child(4n + 1) {
+      background-color: rgb(254, 245, 237);
+    }
+    &:nth-child(4n + 2) {
+      background-color: rgb(254, 245, 237);
+    }
+    &:nth-child(4n + 3) {
+      background-color: rgb(241, 247, 254);
+    }
+    &:nth-child(4n + 4) {
+      background-color: rgb(252, 247, 249);
+    }
+  }
+
+  &-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  &-text {
+    display: flex;
+    justify-content: center;
+    width: 120px;
+    text-overflow: ellipsis;
+  }
+}
+.icon {
+  &-mobile {
+  }
+}

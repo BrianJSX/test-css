@@ -1,10 +1,17 @@
 nz-footer {
   text-align: center;
 }
+html {
+  width: 100%;
+  height: 100%;
+}
 
 .ant-select-dropdown {
   border-radius: 20px !important;
   background-color: #1a457b !important;
+}
+.ant-popover-inner-content {
+  border-radius: 20px !important;
 }
 
 .ant-menu-item-selected {
@@ -50,10 +57,198 @@ nz-footer {
   transition: all 0.5s;
 }
 
+.activeNoti {
+  background-color: #1a457b !important;
+  color: white !important;
+}
+
 .dashboard {
   width: 100%;
   height: 100%;
+  &-notification {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    padding: 10px;
+    &-action {
+      display: flex;
+      margin-top: 10px;
+    }
+    &-message {
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      height: 450px;
+      margin-top: 10px;
 
+      &-children {
+        display: flex;
+        margin-top: 50px;
+        margin: 5px 0;
+        padding: 5px;
+        cursor: pointer;
+        &:hover {
+          background-color: #1a457b;
+          color: white;
+        }
+      }
+      &-content {
+        font-size: 13px;
+        font-weight: 500;
+      }
+      &-date {
+        display: flex;
+        font-size: 12px;
+        color: #92a2c7;
+      }
+      &-left {
+
+      }
+      &-right {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+    &-button {
+      cursor: pointer;
+      outline: none;
+      border: 1px solid #1a457b;
+      color: #1a457b;
+      border-radius: 5px;
+      margin-right: 10px;
+      font-size: 10px;
+      padding: 10px 10px;
+      line-height: 0;
+      background-color: white;
+      &:active {
+        background-color: #1a457b !important;
+        color: white !important;
+      }
+    }
+    &-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      &-icon {
+        font-size: 20px;
+        cursor: pointer;
+      }
+      &-text {
+        font-size: 1rem;
+        color: #1a457b;
+        margin-bottom: 0;
+        margin-right: 10px;
+      }
+      &-left {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+  &-userInfoAv {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 40px;
+    left: -400%;
+    width: 350px;
+    height: 215px;
+    padding: 20px;
+    background-color: #fff;
+    box-sizing: border-box;
+    box-shadow: inset 0 0 2px #1a457b4d;
+    &__avatar {
+      display: flex;
+      text-transform: uppercase;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      background-color: white;
+      border: 2px solid #1a457b;
+      color: #1a457b;
+      font-weight: 600;
+      font-size: 1.4rem;
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+      cursor: pointer;
+      &:hover {
+        background-color: #1a457b;
+        color: white;
+      }
+    }
+    &-header {
+      display: flex;
+      height: 10%;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      &--text {
+        color: #1a457b;
+      }
+      &--signout {
+        color: red;
+      }
+    }
+    &-content {
+      display: flex;
+      height: 60%;
+      &-left {
+        display: flex;
+        width: 40%;
+        align-items: center;
+      }
+      &-right {
+        display: flex;
+        width: 60%;
+        flex-direction: column;
+        margin-top: 20px;
+        &-username {
+          font-size: 15px;
+          font-weight: 400;
+          display: flex;
+          justify-content: start;
+          align-items: center;
+          height: 25%;
+          width: 100%;
+        }
+        &-text {
+          display: flex;
+          justify-content: start;
+          align-items: center;
+          height: 25%;
+          width: 100%;
+        }
+      }
+    }
+    &-footer {
+      display: flex;
+      height: 20%;
+      width: 100%;
+      margin-top: 20px;
+      &--left {
+        display: flex;
+        align-items: center;
+        width: 40%;
+      }
+      &--right {
+        display: flex;
+        align-items: center;
+        width: 60%;
+        justify-content: start;
+        flex-direction: column;
+      }
+      &--text {
+        color: #1a457b;
+        font-size: 13px;
+        display: flex;
+        justify-content: start;
+        height: 50%;
+        width: 100%;
+        align-items: center;
+      }
+    }
+  }
   &__header {
     height: 10%;
     display: flex;
@@ -119,7 +314,6 @@ nz-footer {
             display: flex;
             flex-direction: column;
             width: 100%;
-            font-size: 11px;
           }
         }
         &__right {
@@ -203,7 +397,7 @@ nz-footer {
     &__bell {
       display: flex;
       align-items: center;
-      padding: 20px;
+      padding: 0 20px;
       position: relative;
       cursor: pointer;
       &__notification {
@@ -213,7 +407,7 @@ nz-footer {
         display: flex;
         width: 30px;
         height: 25px;
-        top: 4px;
+        top: -10px;
         right: 7px;
         color: white;
         justify-content: center;
@@ -226,8 +420,10 @@ nz-footer {
       justify-content: center;
       padding: 0 20px;
       border-left: 1px solid #1a457b;
+      position: relative;
       &--nzAvatar {
         display: flex;
+        text-transform: uppercase;
         justify-content: center;
         align-items: center;
         background-color: white;
@@ -257,7 +453,6 @@ nz-footer {
       text-align: left;
       padding-right: 10px;
       width: 120px;
-
     }
   }
 
@@ -303,11 +498,9 @@ nz-footer {
 
     &__main {
       position: absolute;
-      padding: 20px;
       width: calc(100% - 250px);
       right: 0;
       top: 10%;
-      height: 90%;
     }
   }
 }
@@ -440,4 +633,3 @@ nz-footer {
   transform: translateX(200%);
   transition: all 0.5s;
 }
-
