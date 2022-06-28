@@ -31,6 +31,7 @@
       <div
         *ngIf="countryHidden.indexOf('tw') == -1"
         class="country__action__button--country"
+        (click)="goToTaiwan()"
       >
         <img
           class="country__action__button--text"
@@ -39,7 +40,7 @@
           height="50px"
           alt=""
         />
-        <div class="country__action__button--text">Taiwan</div>
+        <div class="country__action__button--text" >Taiwan</div>
       </div>
       <div
         *ngIf="countryHidden.indexOf('my') == -1"

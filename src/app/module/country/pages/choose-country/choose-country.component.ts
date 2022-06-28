@@ -28,6 +28,10 @@ export class ChooseCountryComponent implements OnInit {
 
   }
 
+  goToTaiwan() {
+    this.router.navigateByUrl("/tw/home");
+  }
+
   getCountryUser() {
     this.authService.getCountryUser().subscribe((res) => {
       let filter = difference(this.country, res.data);
