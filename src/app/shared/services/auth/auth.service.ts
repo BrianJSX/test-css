@@ -31,7 +31,7 @@ export class AuthService {
 
   getAuthorizationHeaders() {
     const token: string | null = this.cookieStorage.getCookie('token') || '';
-    let country = this.cookieStorage.getCookie("lang") || "tw";
+    let country = "tw";
     return {
       'x-country-code': country,
       Authorization: `Bearer ${token}`,

@@ -80,12 +80,25 @@ html {
       flex-direction: column;
       height: 450px;
       margin-top: 10px;
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 20px;
+      }
 
       &-children {
         display: flex;
         margin-top: 50px;
+        justify-content: center;
+        align-items: center;
         margin: 5px 0;
         padding: 5px;
+        height: 90px;
         cursor: pointer;
         &:hover {
           background-color: #1a457b;
@@ -102,7 +115,6 @@ html {
         color: #92a2c7;
       }
       &-left {
-
       }
       &-right {
         display: flex;
@@ -187,6 +199,7 @@ html {
         color: #1a457b;
       }
       &--signout {
+        cursor: pointer;
         color: red;
       }
     }
@@ -488,6 +501,11 @@ html {
       font-weight: 600;
     }
     &__item {
+      &--icon {
+        width: 25px;
+        font-size: 25px;
+        margin-right: 5px;
+      }
     }
   }
 

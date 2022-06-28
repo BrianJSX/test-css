@@ -4,6 +4,12 @@ export interface NotificationResponse {
   error_type: string;
   message: string;
   data: Array<DataNotificationResponse>;
+  meta: {
+    pageNumber: number;
+    pageSize: number;
+    totalElements: number;
+    totalPages: number;
+  };
 }
 
 export interface DataNotificationResponse {

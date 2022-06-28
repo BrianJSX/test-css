@@ -29,18 +29,27 @@
 
   &-penbox {
     &--above {
-      display: inline-flex;
+      display: flex;
       width: 100%;
       overflow-x: auto;
       flex-wrap: nowrap;
       height: 20%;
+      &::-webkit-scrollbar {
+        height: 10px;
+      }
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 20px;
+      }
     }
     &--down {
       display: flex;
       width: 100%;
       flex-wrap: wrap;
     }
-
   }
 
   &-itemIcon {
@@ -63,11 +72,13 @@
     width: 190px;
     height: 130px;
     display: flex;
+    text-align: center;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
     padding: 20px;
     margin: 0 10px 10px 0;
+    overflow: hidden;
     cursor: pointer;
     &:nth-child(4n + 1) {
       background-color: rgb(254, 245, 237);
@@ -90,12 +101,17 @@
   }
 
   &-text {
-    display: flex;
-    justify-content: center;
+    text-align: center;
     width: 120px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     text-overflow: ellipsis;
+    word-break: break-word;
   }
 }
+
 .icon {
   &-mobile {
   }

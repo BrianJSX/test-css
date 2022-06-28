@@ -29,7 +29,8 @@ import { PopupDirrectiveDirective } from './layout/main-layout/directive/popup-d
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
-
+import {ScrollingModule} from "@angular/cdk/scrolling";
+import { FontsizeDirective } from './layout/main-layout/directive/fontsize.directive'
 
 registerLocaleData(en);
 export function HttpLoaderFactory(http: HttpClient) {
@@ -43,8 +44,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     AuthLayoutComponent,
     MainLayoutComponent,
     PopupDirrectiveDirective,
+    FontsizeDirective,
   ],
   imports: [
+    ScrollingModule,
     InfiniteScrollModule,
     NzMenuModule,
     NzLayoutModule,

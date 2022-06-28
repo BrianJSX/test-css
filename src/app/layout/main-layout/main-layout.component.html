@@ -1,4 +1,4 @@
-<nz-layout class="dashboard">
+<nz-layout class="dashboard" appFontsize>
   <div
     class="dashboard__sider"
     #refSider
@@ -14,22 +14,9 @@
       />
     </div>
     <ul nz-menu nzMode="inline" class="dashboard__menu">
-      <li class="dashboard__menu__item" nz-submenu nzTitle="User" nzIcon="user">
-        <ul>
-          <li nz-menu-item>Tom</li>
-          <li nz-menu-item>Bill</li>
-          <li nz-menu-item>Alex</li>
-        </ul>
-      </li>
-      <li class="dashboard__menu__item" nz-submenu nzTitle="Team" nzIcon="team">
-        <ul>
-          <li nz-menu-item>Team 1</li>
-          <li nz-menu-item>Team 2</li>
-        </ul>
-      </li>
       <li class="dashboard__menu__item" nz-menu-item>
-        <i nz-icon nzType="file"></i>
-        <span>File</span>
+        <i nz-icon nzType="home" class="dashboard__menu__item--icon"></i>
+        <span class="text">{{ "MENU.HOME" | translate }}</span>
       </li>
     </ul>
   </div>
@@ -82,11 +69,10 @@
             </svg>
           </div>
           <div class="dashboard__header__mobile__menu__left--string">
-            <span class="dashboard__header__mobile__menu___left--text">
-              Order related inquiries including
-            </span>
-            <span class="dashboard__header__mobile__menu___left--text">
-              how to use My Orders
+            <span
+              class="dashboard__header__mobile__menu___left--text"
+              innerHTML="{{ 'HEAD.LINK_CUSTOMER_SERV' | translate }}"
+            >
             </span>
           </div>
         </div>
@@ -97,11 +83,10 @@
             </svg>
           </div>
           <div class="dashboard__header__mobile__menu__left--string">
-            <span class="dashboard__header__mobile__menu___left--text">
-              Technical inquiries -
-            </span>
-            <span class="dashboard__header__mobile__menu___left--text">
-              My Orders system or access issues
+            <span
+              class="dashboard__header__mobile__menu___left--text"
+              innerHTML="{{ 'HEAD.LINK_IT_SERV' | translate }}"
+            >
             </span>
           </div>
         </div>
@@ -116,14 +101,27 @@
           <div class="dashboard__header__mobile__menu__left--string">
             <nz-select
               class="dashboard__header__mobile__menu__left--select"
-              ngModel="Normal"
+              [ngModel]="fontZoom"
+              (ngModelChange)="handleFontZoom($event)"
               nzBorderless="true"
               nzCustomContent="true"
             >
-              <nz-option nzValue="Normal" nzLabel="Normal"></nz-option>
-              <nz-option nzValue="1x" nzLabel="1x"></nz-option>
-              <nz-option nzValue="2x" nzLabel="2x"></nz-option>
-              <nz-option nzValue="3x" nzLabel="3x"></nz-option>
+              <nz-option
+                nzValue="1rem"
+                nzLabel="{{ 'HEAD.ZOOM_NORMAL' | translate }}"
+              ></nz-option>
+              <nz-option
+                nzValue="1.1rem"
+                nzLabel="{{ 'HEAD.ZOOM_1X' | translate }}"
+              ></nz-option>
+              <nz-option
+                nzValue="1.2rem"
+                nzLabel="{{ 'HEAD.ZOOM_2X' | translate }}"
+              ></nz-option>
+              <nz-option
+                nzValue="1.3rem"
+                nzLabel="{{ 'HEAD.ZOOM_3X' | translate }}"
+              ></nz-option>
             </nz-select>
           </div>
         </div>
@@ -136,42 +134,63 @@
           <div class="dashboard__header__mobile__menu__left--string">
             <nz-select
               class="dashboard__header__mobile__menu__left--select"
-              ngModel="English"
+              [ngModel]="language"
+              (ngModelChange)="handleChangeLanguage($event)"
               nzBorderless="true"
               nzCustomContent="true"
             >
-              <nz-option nzValue="English" nzLabel="English"></nz-option>
-              <nz-option nzValue="Japan" nzLabel="Japan"></nz-option>
+              <nz-option
+                nzValue="en"
+                nzLabel="{{ 'LANG.EN' | translate }}"
+              ></nz-option>
+              <nz-option
+                nzValue="jp"
+                nzLabel="{{ 'LANG.JP' | translate }}"
+              ></nz-option>
+              <nz-option
+                nzValue="zh-cn"
+                nzLabel="{{ 'LANG.ZH-CN' | translate }}"
+              ></nz-option>
+              <nz-option
+                nzValue="zh-tw"
+                nzLabel="{{ 'LANG.ZH-TW' | translate }}"
+              ></nz-option>
             </nz-select>
           </div>
         </div>
         <div class="dashboard__header__mobile__menu__left--children">
           <div class="dashboard__header__mobile__menu__left--icon">
-            <div class="dashboard__header__right__bellMobile">
+            <button
+              class="dashboard__header__right__bellMobile buttonTranparent"
+              nz-popover
+              [(nzPopoverVisible)]="openNotifycationMobile"
+              nzPopoverTrigger="click"
+              [nzPopoverContent]="contentTemplate"
+            >
               <svg class="icon icon-left" style="margin-right: 10px">
                 <use xlink:href="/assets/all.svg#bell"></use>
               </svg>
               <div
-                class="dashboard__header__right__bellMobile__notificationMobile"
+                class="dashboard__header__right__bellMobile__notificationMobile text"
               >
-                10
+                {{ countNotiUnRead }}
               </div>
-            </div>
+            </button>
           </div>
           <div class="dashboard__header__mobile__menu__left--string">
-            <span class="dashboard__header__mobile__menu___left--text">
+            <span class="dashboard__header__mobile__menu___left--text text">
               {{ userProfile?.data?.fullName }}
             </span>
           </div>
         </div>
         <div class="dashboard__header__mobile__menu__left--children">
           <div class="dashboard__header__mobile__menu__left--icon">
-            <div class="dashboard__header__right__avatar--nzAvatar">
+            <div class="dashboard__header__right__avatar--nzAvatar text">
               {{ userProfile?.data?.fullName?.substring(0, 1) }}
             </div>
           </div>
           <div class="dashboard__header__mobile__menu__left--string">
-            <span class="dashboard__header__mobile__menu___left--text">
+            <span class="dashboard__header__mobile__menu___left--text text">
               {{ userProfile?.data?.fullName }}
             </span>
           </div>
@@ -182,35 +201,57 @@
       <div class="dashboard__header__left">
         <ul class="dashboard__header__left--ul">
           <li class="dashboard__header__left--li">
-            <span class="dashboard__header__left--icon">
+            <button
+              class="dashboard__header__left--icon buttonTranparent"
+              nz-button
+              nz-popover
+              [nzPopoverContent]="emailCircle"
+              nzPopoverPlacement="bottomLeft"
+            >
               <svg class="icon icon-left">
                 <use xlink:href="/assets/all.svg#email-circle"></use>
               </svg>
-            </span>
+            </button>
             <span class="dashboard__header__left--string">
-              <span class="dashboard__header__left--text">
-                Order related inquiries including
-              </span>
-              <span class="dashboard__header__left--text">
-                how to use My Orders
+              <span
+                class="dashboard__header__left--text"
+                innerHTML="{{ 'HEAD.LINK_CUSTOMER_SERV' | translate }}"
+              >
               </span>
             </span>
           </li>
+          <ng-template #emailCircle>
+            <div
+              class="dashboard__header__left--text"
+              innerHTML="{{ 'HEAD.LINK_CUSTOMER_SERV' | translate }}"
+            ></div>
+          </ng-template>
           <li class="dashboard__header__left--li">
-            <span class="dashboard__header__left--icon">
+            <button
+              class="dashboard__header__left--icon buttonTranparent"
+              nz-button
+              nz-popover
+              [nzPopoverContent]="questionCircle"
+              nzPopoverPlacement="bottomLeft"
+            >
               <svg class="icon icon-left">
                 <use xlink:href="/assets/all.svg#question-circle"></use>
               </svg>
-            </span>
+            </button>
             <span class="dashboard__header__left--string">
-              <span class="dashboard__header__left--text">
-                Technical inquiries -
-              </span>
-              <span class="dashboard__header__left--text">
-                My Orders system or access issues
+              <span
+                class="dashboard__header__left--text"
+                innerHTML="{{ 'HEAD.LINK_IT_SERV' | translate }}"
+              >
               </span>
             </span>
           </li>
+          <ng-template #questionCircle>
+            <div
+              class="dashboard__header__left--text"
+              innerHTML="{{ 'HEAD.LINK_IT_SERV' | translate }}"
+            ></div>
+          </ng-template>
         </ul>
       </div>
       <div class="dashboard__header__right">
@@ -220,13 +261,26 @@
           </svg>
           <nz-select
             class="dashboard__header__right__select"
-            ngModel="Normal"
+            [ngModel]="fontZoom"
+            (ngModelChange)="handleFontZoom($event)"
             nzBorderless="true"
           >
-            <nz-option nzValue="Normal" nzLabel="Normal"></nz-option>
-            <nz-option nzValue="1x" nzLabel="1x"></nz-option>
-            <nz-option nzValue="2x" nzLabel="2x"></nz-option>
-            <nz-option nzValue="3x" nzLabel="3x"></nz-option>
+            <nz-option
+              nzValue="1rem"
+              nzLabel="{{ 'HEAD.ZOOM_NORMAL' | translate }}"
+            ></nz-option>
+            <nz-option
+              nzValue="1.1rem"
+              nzLabel="{{ 'HEAD.ZOOM_1X' | translate }}"
+            ></nz-option>
+            <nz-option
+              nzValue="1.2rem"
+              nzLabel="{{ 'HEAD.ZOOM_2X' | translate }}"
+            ></nz-option>
+            <nz-option
+              nzValue="1.3rem"
+              nzLabel="{{ 'HEAD.ZOOM_3X' | translate }}"
+            ></nz-option>
           </nz-select>
         </div>
         <div class="dashboard__header__right__language">
@@ -235,11 +289,26 @@
           </svg>
           <nz-select
             class="dashboard__header__right__select"
-            ngModel="Normal"
+            [ngModel]="language"
+            (ngModelChange)="handleChangeLanguage($event)"
             nzBorderless="true"
           >
-            <nz-option nzValue="Normal" nzLabel="English"></nz-option>
-            <nz-option nzValue="1x" nzLabel="Japan"></nz-option>
+            <nz-option
+              nzValue="en"
+              nzLabel="{{ 'LANG.EN' | translate }}"
+            ></nz-option>
+            <nz-option
+              nzValue="jp"
+              nzLabel="{{ 'LANG.JP' | translate }}"
+            ></nz-option>
+            <nz-option
+              nzValue="zh-cn"
+              nzLabel="{{ 'LANG.ZH-CN' | translate }}"
+            ></nz-option>
+            <nz-option
+              nzValue="zh-tw"
+              nzLabel="{{ 'LANG.ZH-TW' | translate }}"
+            ></nz-option>
           </nz-select>
         </div>
         <button
@@ -255,7 +324,7 @@
           </svg>
           <div
             *ngIf="countNotiUnRead != 0"
-            class="dashboard__header__right__bell__notification"
+            class="dashboard__header__right__bell__notification text"
           >
             {{ countNotiUnRead }}
           </div>
@@ -264,13 +333,19 @@
           <div class="dashboard-notification">
             <div class="dashboard-notification-title">
               <div class="dashboard-notification-title-left">
-                <h2 class="dashboard-notification-title-text">Notifycation</h2>
-                <div class="dashboard-notification-title-icon">
+                <h2 class="dashboard-notification-title-text">
+                  {{ "HEAD.NOTIFICATION" | translate }}
+                </h2>
+                <!-- Icon -->
+                <button
+                  class="dashboard-notification-title-icon buttonTranparent"
+                  (click)="handleResetNotification()"
+                >
                   <i nz-icon nzType="sync" nzTheme="outline"></i>
-                </div>
+                </button>
               </div>
               <div class="dashboard-notification-title-right">
-                <svg class="icon" style="width: 15px; cursor: pointer">
+                <svg class="icon" style="width: 20px; cursor: pointer">
                   <use xlink:href="/assets/all.svg#hamburger"></use>
                 </svg>
               </div>
@@ -281,40 +356,43 @@
                 (click)="handleNotifycationAll()"
                 class="dashboard-notification-button"
               >
-                All
+                {{ "HEAD.ALL" | translate }}
               </button>
               <button
                 [class.activeNoti]="activeNotify == 2"
                 (click)="handleNotifycationRead()"
                 class="dashboard-notification-button"
               >
-                Read
+                {{ "HEAD.READ" | translate }}
               </button>
               <button
                 [class.activeNoti]="activeNotify == 3"
                 (click)="handleNotifycationUnRead()"
                 class="dashboard-notification-button"
               >
-                Unread
+                {{ "HEAD.UNREAD" | translate }}
               </button>
             </div>
-            <div
+            <!-- <div > -->
+            <cdk-virtual-scroll-viewport
               class="dashboard-notification-message"
-              infiniteScroll
-              (scrolled)="onScroll()"
-              [immediateCheck]="true"
-              [scrollWindow]="false"
+              itemSize="100"
               #refScrollNoti
+              (scrolledIndexChange)="nextListItem($event)"
             >
               <!-- Message -->
               <div
-                *ngFor="let notifyItem of notification?.data"
+                *cdkVirtualFor="
+                  let notifyItem of notification?.data;
+                  let i = index;
+                  trackBy: trackByIdx
+                "
                 class="dashboard-notification-message-children"
               >
                 <div class="dashboard-notification-message-left">
                   <nz-badge
                     *ngIf="!notifyItem.hasAlreadyRead"
-                    style="margin: 22px 10px 0 0"
+                    style="margin: 0px 10px 0 0"
                     nzColor="#108ee9"
                   ></nz-badge>
                   <span
@@ -331,14 +409,15 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </cdk-virtual-scroll-viewport>
+            <!-- </div> -->
           </div>
         </ng-template>
 
         <div class="dashboard__header__right__avatar">
           <button
             #refAvatar
-            class="dashboard__header__right__avatar--nzAvatar buttonTranparent"
+            class="dashboard__header__right__avatar--nzAvatar buttonTranparent text"
             (click)="handleOpenProfile()"
           >
             {{ userProfile?.data?.fullName?.substring(0, 1) }}
@@ -346,25 +425,29 @@
           <div *ngIf="openProfile" class="dashboard-userInfoAv" #refPopup>
             <div class="dashboard-userInfoAv-header">
               <span class="dashboard-userInfoAv-header--text">
-                Boston Scientific
+                {{ "BOSTON_SCIENTIFIC.BRAND_NAME" | translate }}
               </span>
-              <div class="dashboard-userInfoAv-header--signout">Sign out</div>
+              <div class="dashboard-userInfoAv-header--signout">
+                {{ "HEAD.LOG_OUT" | translate }}
+              </div>
             </div>
             <div class="dashboard-userInfoAv-content">
               <div class="dashboard-userInfoAv-content-left">
-                <div class="dashboard-userInfoAv__avatar" refAvatar>
+                <div class="dashboard-userInfoAv__avatar text" refAvatar>
                   {{ userProfile?.data?.fullName?.substring(0, 1) }}
                 </div>
               </div>
               <div class="dashboard-userInfoAv-content-right">
-                <div class="dashboard-userInfoAv-content-right-username">
+                <div class="dashboard-userInfoAv-content-right-username text">
                   {{ userProfile?.data?.fullName }}
                 </div>
-                <div class="dashboard-userInfoAv-content-right-text">
+                <div class="dashboard-userInfoAv-content-right-text text">
                   {{ userProfile?.data?.email }}
                 </div>
-                <div class="dashboard-userInfoAv-content-right-text">
-                  <span style="margin-right: 5px">Role:</span>
+                <div class="dashboard-userInfoAv-content-right-text text">
+                  <span style="margin-right: 5px"
+                    >{{ "MENU.ADMIN.ROLE" | translate }}:</span
+                  >
                   {{ userProfile?.data?.role?.name }}
                 </div>
               </div>
@@ -372,11 +455,11 @@
             <div class="dashboard-userInfoAv-footer">
               <div class="dashboard-userInfoAv-footer--left"></div>
               <div class="dashboard-userInfoAv-footer--right">
-                <div class="dashboard-userInfoAv-footer--text">
-                  Change password
+                <div class="dashboard-userInfoAv-footer--text text">
+                  {{ "COMMON.CHANGE_PASS" | translate }}
                 </div>
-                <div class="dashboard-userInfoAv-footer--text">
-                  Switch account
+                <div class="dashboard-userInfoAv-footer--text text">
+                  {{ "login.SWITCH_COUNTRY" | translate }}
                 </div>
               </div>
             </div>
