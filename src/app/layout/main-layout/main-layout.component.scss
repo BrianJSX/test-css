@@ -73,6 +73,7 @@ html {
     &-action {
       display: flex;
       margin-top: 10px;
+      font-size: 100%;
     }
     &-message {
       overflow-y: auto;
@@ -92,13 +93,13 @@ html {
       }
 
       &-children {
+        font-size: 100%;
         display: flex;
         margin-top: 50px;
         justify-content: center;
         align-items: center;
         margin: 5px 0;
         padding: 5px;
-        height: 90px;
         cursor: pointer;
         &:hover {
           background-color: #1a457b;
@@ -106,7 +107,7 @@ html {
         }
       }
       &-content {
-        font-size: 13px;
+        font-size: 1em;
         font-weight: 500;
       }
       &-date {
@@ -128,7 +129,7 @@ html {
       color: #1a457b;
       border-radius: 5px;
       margin-right: 10px;
-      font-size: 10px;
+      font-size: 1em;
       padding: 10px 10px;
       line-height: 0;
       background-color: white;
@@ -160,15 +161,12 @@ html {
   &-userInfoAv {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    top: 40px;
-    left: -400%;
     width: 350px;
     height: 215px;
     padding: 20px;
     background-color: #fff;
-    box-sizing: border-box;
-    box-shadow: inset 0 0 2px #1a457b4d;
+    font-size: 100%;
+    overflow: hidden;
     &__avatar {
       display: flex;
       text-transform: uppercase;
@@ -194,7 +192,7 @@ html {
       height: 10%;
       justify-content: space-between;
       align-items: center;
-      font-size: 13px;
+      font-size: 1em;
       &--text {
         color: #1a457b;
       }
@@ -206,6 +204,7 @@ html {
     &-content {
       display: flex;
       height: 60%;
+      font-size: 1em;
       &-left {
         display: flex;
         width: 40%;
@@ -217,7 +216,6 @@ html {
         flex-direction: column;
         margin-top: 20px;
         &-username {
-          font-size: 15px;
           font-weight: 400;
           display: flex;
           justify-content: start;
@@ -239,6 +237,8 @@ html {
       height: 20%;
       width: 100%;
       margin-top: 20px;
+      font-size: 1em;
+
       &--left {
         display: flex;
         align-items: center;
@@ -253,12 +253,13 @@ html {
       }
       &--text {
         color: #1a457b;
-        font-size: 13px;
         display: flex;
         justify-content: start;
         height: 50%;
+        margin-top: 3px;
         width: 100%;
         align-items: center;
+        cursor: pointer;
       }
     }
   }
@@ -523,7 +524,7 @@ html {
   }
 }
 
-@media screen and (max-width: 1320px) {
+@media screen and (max-width: 1390px) {
   .icon-left {
     width: 1.5rem;
     height: 1.5rem;

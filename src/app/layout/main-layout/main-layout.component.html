@@ -1,4 +1,5 @@
-<nz-layout class="dashboard" appFontsize>
+<nz-layout class="dashboard">
+  <!-- Sider -->
   <div
     class="dashboard__sider"
     #refSider
@@ -21,6 +22,7 @@
     </ul>
   </div>
   <nz-layout>
+    <!-- Header Mobile -->
     <div
       [class.rotateIconHam]="isCollapsedMobile"
       [class.rotateIconReset]="!isCollapsedMobile"
@@ -57,10 +59,12 @@
         />
       </div>
     </div>
+    <!-- Menu Of Mobile -->
     <div
       class="dashboard__header__mobile__menu"
       [class.show]="isCollapsedMenuRight"
     >
+      <!-- Menu Of Mobile Left -->
       <div class="dashboard__header__mobile__menu__left">
         <div class="dashboard__header__mobile__menu__left--children">
           <div class="dashboard__header__mobile__menu__left--icon">
@@ -91,6 +95,7 @@
           </div>
         </div>
       </div>
+      <!-- Menu Of Mobile Right -->
       <div class="dashboard__header__mobile__menu__right">
         <div class="dashboard__header__mobile__menu__left--children">
           <div class="dashboard__header__mobile__menu__left--icon">
@@ -101,7 +106,7 @@
           <div class="dashboard__header__mobile__menu__left--string">
             <nz-select
               class="dashboard__header__mobile__menu__left--select"
-              [ngModel]="fontZoom"
+              [ngModel]="fontZoomMobile"
               (ngModelChange)="handleFontZoom($event)"
               nzBorderless="true"
               nzCustomContent="true"
@@ -143,10 +148,10 @@
                 nzValue="en"
                 nzLabel="{{ 'LANG.EN' | translate }}"
               ></nz-option>
-              <nz-option
+              <!-- <nz-option
                 nzValue="jp"
                 nzLabel="{{ 'LANG.JP' | translate }}"
-              ></nz-option>
+              ></nz-option> -->
               <nz-option
                 nzValue="zh-cn"
                 nzLabel="{{ 'LANG.ZH-CN' | translate }}"
@@ -165,6 +170,7 @@
               nz-popover
               [(nzPopoverVisible)]="openNotifycationMobile"
               nzPopoverTrigger="click"
+              (nzPopoverVisibleChange)="handleZoomNotication()"
               [nzPopoverContent]="contentTemplate"
             >
               <svg class="icon icon-left" style="margin-right: 10px">
@@ -183,11 +189,21 @@
             </span>
           </div>
         </div>
-        <div class="dashboard__header__mobile__menu__left--children">
+        <div
+          class="dashboard__header__mobile__menu__left--children"
+          nz-popover
+          [(nzPopoverVisible)]="openProfileMobile"
+          nzPopoverTrigger="click"
+          (nzPopoverVisibleChange)="handleZoomUserProfile()"
+          [nzPopoverContent]="avatarTemplate"
+          nzPopoverPlacement="bottomRight"
+        >
           <div class="dashboard__header__mobile__menu__left--icon">
-            <div class="dashboard__header__right__avatar--nzAvatar text">
+            <button
+              class="dashboard__header__right__avatar--nzAvatar text buttonTranparent"
+            >
               {{ userProfile?.data?.fullName?.substring(0, 1) }}
-            </div>
+            </button>
           </div>
           <div class="dashboard__header__mobile__menu__left--string">
             <span class="dashboard__header__mobile__menu___left--text text">
@@ -197,7 +213,9 @@
         </div>
       </div>
     </div>
+    <!-- Header PC -->
     <nz-header class="dashboard__header">
+      <!-- Header Left -->
       <div class="dashboard__header__left">
         <ul class="dashboard__header__left--ul">
           <li class="dashboard__header__left--li">
@@ -254,7 +272,9 @@
           </ng-template>
         </ul>
       </div>
+      <!-- Header Right -->
       <div class="dashboard__header__right">
+        <!-- Header Right Font -->
         <div class="dashboard__header__right__font">
           <svg class="icon icon-home">
             <use xlink:href="/assets/all.svg#font-typo"></use>
@@ -283,6 +303,7 @@
             ></nz-option>
           </nz-select>
         </div>
+        <!-- Header Right Language -->
         <div class="dashboard__header__right__language">
           <svg class="icon icon-home">
             <use xlink:href="/assets/all.svg#earth"></use>
@@ -297,10 +318,10 @@
               nzValue="en"
               nzLabel="{{ 'LANG.EN' | translate }}"
             ></nz-option>
-            <nz-option
+            <!-- <nz-option
               nzValue="jp"
               nzLabel="{{ 'LANG.JP' | translate }}"
-            ></nz-option>
+            ></nz-option> -->
             <nz-option
               nzValue="zh-cn"
               nzLabel="{{ 'LANG.ZH-CN' | translate }}"
@@ -311,10 +332,12 @@
             ></nz-option>
           </nz-select>
         </div>
+        <!-- Header Right Notification -->
         <button
           nz-popover
           [(nzPopoverVisible)]="openNotifycation"
           nzPopoverTrigger="click"
+          (nzPopoverVisibleChange)="handleZoomNotication()"
           [nzPopoverContent]="contentTemplate"
           nzPopoverPlacement="bottomRight"
           class="dashboard__header__right__bell buttonTranparent"
@@ -329,6 +352,7 @@
             {{ countNotiUnRead }}
           </div>
         </button>
+        <!-- Notification Template -->
         <ng-template #contentTemplate>
           <div class="dashboard-notification">
             <div class="dashboard-notification-title">
@@ -354,21 +378,21 @@
               <button
                 [class.activeNoti]="activeNotify == 1"
                 (click)="handleNotifycationAll()"
-                class="dashboard-notification-button"
+                class="dashboard-notification-button text"
               >
                 {{ "HEAD.ALL" | translate }}
               </button>
               <button
                 [class.activeNoti]="activeNotify == 2"
                 (click)="handleNotifycationRead()"
-                class="dashboard-notification-button"
+                class="dashboard-notification-button text"
               >
                 {{ "HEAD.READ" | translate }}
               </button>
               <button
                 [class.activeNoti]="activeNotify == 3"
                 (click)="handleNotifycationUnRead()"
-                class="dashboard-notification-button"
+                class="dashboard-notification-button text"
               >
                 {{ "HEAD.UNREAD" | translate }}
               </button>
@@ -388,6 +412,7 @@
                   trackBy: trackByIdx
                 "
                 class="dashboard-notification-message-children"
+                #refNotiMessage
               >
                 <div class="dashboard-notification-message-left">
                   <nz-badge
@@ -401,10 +426,10 @@
                   ></span>
                 </div>
                 <div class="dashboard-notification-message-right">
-                  <div class="dashboard-notification-message-content">
+                  <div class="dashboard-notification-message-content text">
                     {{ notifyItem.title }}
                   </div>
-                  <div class="dashboard-notification-message-date">
+                  <div class="dashboard-notification-message-date text">
                     {{ notifyItem.createdDate | date: "dd/MM/YYYY hh:mm:ss a" }}
                   </div>
                 </div>
@@ -413,23 +438,34 @@
             <!-- </div> -->
           </div>
         </ng-template>
-
+        <!-- Header Right Avatar -->
         <div class="dashboard__header__right__avatar">
           <button
             #refAvatar
+            nz-popover
+            [(nzPopoverVisible)]="openProfile"
+            nzPopoverTrigger="click"
+            (nzPopoverVisibleChange)="handleZoomUserProfile()"
+            [nzPopoverContent]="avatarTemplate"
+            nzPopoverPlacement="bottomRight"
             class="dashboard__header__right__avatar--nzAvatar buttonTranparent text"
-            (click)="handleOpenProfile()"
           >
             {{ userProfile?.data?.fullName?.substring(0, 1) }}
           </button>
-          <div *ngIf="openProfile" class="dashboard-userInfoAv" #refPopup>
+        </div>
+        <!-- User Profile Template -->
+        <ng-template #avatarTemplate>
+          <div class="dashboard-userInfoAv" #refPopup>
             <div class="dashboard-userInfoAv-header">
               <span class="dashboard-userInfoAv-header--text">
                 {{ "BOSTON_SCIENTIFIC.BRAND_NAME" | translate }}
               </span>
-              <div class="dashboard-userInfoAv-header--signout">
+              <button
+                class="dashboard-userInfoAv-header--signout buttonTranparent"
+                (click)="handleLogout()"
+              >
                 {{ "HEAD.LOG_OUT" | translate }}
-              </div>
+              </button>
             </div>
             <div class="dashboard-userInfoAv-content">
               <div class="dashboard-userInfoAv-content-left">
@@ -458,13 +494,16 @@
                 <div class="dashboard-userInfoAv-footer--text text">
                   {{ "COMMON.CHANGE_PASS" | translate }}
                 </div>
-                <div class="dashboard-userInfoAv-footer--text text">
+                <div
+                  class="dashboard-userInfoAv-footer--text text buttonTranparent"
+                  (click)="handleSwitchCountry()"
+                >
                   {{ "login.SWITCH_COUNTRY" | translate }}
-                </div>
+              </div>
               </div>
             </div>
           </div>
-        </div>
+        </ng-template>
       </div>
     </nz-header>
     <div class="dashboard__content">

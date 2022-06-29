@@ -20,6 +20,8 @@ import { concat } from 'lodash';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieStorage } from 'src/app/core/utils/cookie';
+import { LanguageService } from 'src/app/shared/services/language/language-service.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
@@ -31,6 +33,7 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
   isCollapsedMenuRight = false;
 
   openProfile = false;
+  openProfileMobile = false;
   openNotifycation = false;
   openNotifycationMobile = false;
   countNotiUnRead = 0;
@@ -41,8 +44,9 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
   totalPage = 0;
 
   //ng-modal select
-  language = "en"
-  fontZoom = "1rem"
+  language = this.cookieStorage.getCookie('lang') || 'en';
+  fontZoom = '1rem';
+  fontZoomMobile = '1rem';
 
   resizeObservable$!: Observable<any>;
   resizeSubscription$!: Subscription;
@@ -52,6 +56,7 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
   userProfile: UserProfileResponse | null = null;
   notification: NotificationResponse | null = null;
 
+  @ViewChild('refNotiMessage') refNotiMessage!: ElementRef<HTMLButtonElement>;
   @ViewChild('refAvatar') refAvatar: ElementRef<HTMLButtonElement> | undefined;
   @ViewChild('refPopup') refPopup: ElementRef<HTMLDivElement> | undefined;
   @ViewChild('refSider') refSider: ElementRef<HTMLElement> | undefined;
@@ -66,9 +71,12 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
     private notifyService: NotificationService,
     private translate: TranslateService,
     private cookieStorage: CookieStorage,
+    private languageService: LanguageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.translate.use(this.cookieStorage.getCookie('lang') || 'en');
     this.authService
       .getUserInfo()
       .subscribe((res) => this.authService.setUserInfo(res));
@@ -123,6 +131,7 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
 
   handleOpenProfile() {
     this.openProfile = true;
+    this.handleZoomUserProfile();
   }
 
   handleCloseProfile() {
@@ -138,16 +147,104 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
     }
   }
 
+  handleLogout() {
+    this.authService.logout().subscribe(
+      (res) => {
+        this.cookieStorage.deleteAllCookies();
+        this.router.navigateByUrl('/auth/login-penguin');
+      },
+      (err) => {
+        this.cookieStorage.deleteAllCookies();
+        this.router.navigateByUrl('/auth/login-penguin');
+      }
+    );
+  }
+
+  handleSwitchCountry() {
+    this.router.navigateByUrl('/choose-country');
+  }
+
   handleChangeLanguage(e: Event) {
+    this.languageService.setLanguage(e.toString());
     this.cookieStorage.setCookie('lang', e.toString());
     this.translate.use(this.cookieStorage.getCookie('lang') || 'en');
   }
 
-  handleFontZoom(e: Event) {
-    let text: any = document.querySelectorAll(".text");
+  handleFontZoom(e: Event | any) {
+    this.fontZoom = e.toString();
+    let text: any = document.querySelectorAll('.text');
     for (let index = 0; index < text.length; index++) {
       text[index].style.fontSize = e.toString();
     }
+  }
+
+  handleZoomNotication() {
+    setTimeout(() => {
+      let cdkScrollRef: HTMLDivElement | null = document.querySelector(
+        '.cdk-virtual-scroll-content-wrapper'
+      );
+      let notifyAction: HTMLDivElement | null = document.querySelector(
+        '.dashboard-notification-action'
+      );
+      switch (this.fontZoom) {
+        case '1rem':
+          if (cdkScrollRef && notifyAction) {
+            cdkScrollRef.style.fontSize = '100%';
+            notifyAction.style.fontSize = '100%';
+          }
+          break;
+        case '1.1rem':
+          if (cdkScrollRef && notifyAction) {
+            cdkScrollRef.style.fontSize = '110%';
+            notifyAction.style.fontSize = '110%';
+          }
+          break;
+        case '1.2rem':
+          if (cdkScrollRef && notifyAction) {
+            cdkScrollRef.style.fontSize = '120%';
+            notifyAction.style.fontSize = '120%';
+          }
+          break;
+        case '1.3rem':
+          if (cdkScrollRef && notifyAction) {
+            cdkScrollRef.style.fontSize = '130%';
+            notifyAction.style.fontSize = '130%';
+          }
+          break;
+      }
+    }, 100);
+  }
+
+  handleZoomUserProfile() {
+    setTimeout(() => {
+      let userInfoRef: HTMLDivElement | null = document.querySelector(
+        '.dashboard-userInfoAv'
+      );
+      if (userInfoRef) {
+        switch (this.fontZoom) {
+          case '1rem':
+            if (userInfoRef) {
+              userInfoRef.style.fontSize = '100%';
+            }
+            break;
+          case '1.1rem':
+            if (userInfoRef) {
+              userInfoRef.style.fontSize = '110%';
+            }
+            break;
+          case '1.2rem':
+            if (userInfoRef) {
+              userInfoRef.style.fontSize = '120%';
+            }
+            break;
+          case '1.3rem':
+            if (userInfoRef) {
+              userInfoRef.style.fontSize = '130%';
+            }
+            break;
+        }
+      }
+    }, 0);
   }
 
   handleNotifycationAllScroll(currentPage: DataNotificationResponse) {

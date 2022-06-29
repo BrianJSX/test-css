@@ -1,9 +1,11 @@
 import {
   Directive,
   ElementRef,
+  EventEmitter,
   HostListener,
   Input,
   OnInit,
+  Output,
 } from '@angular/core';
 
 @Directive({
@@ -14,8 +16,5 @@ export class FontsizeDirective implements OnInit {
 
   constructor(private el: ElementRef) {}
 
-  ngOnInit(): void {
-    this.el.nativeElement.style.fontSize = this.fontSize;
-  }
-
+  ngOnInit(): void {}
 }
