@@ -76,7 +76,13 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.translate.use(this.cookieStorage.getCookie('lang') || 'en');
+    this.languageService.language$.subscribe((language) => {
+      if (language) {
+        this.translate.use(language);
+        this.language = language;
+      }
+    });
+
     this.authService
       .getUserInfo()
       .subscribe((res) => this.authService.setUserInfo(res));
@@ -165,9 +171,14 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
   }
 
   handleChangeLanguage(e: Event) {
+    let currentData = this.userInfo?.data.userProfile;
+    let updateData = { ...currentData, language: e.toString() };
+
+    this.authService
+      .updateUserProfile(updateData)
+      .subscribe((res) => console.log(res));
     this.languageService.setLanguage(e.toString());
     this.cookieStorage.setCookie('lang', e.toString());
-    this.translate.use(this.cookieStorage.getCookie('lang') || 'en');
   }
 
   handleFontZoom(e: Event | any) {
