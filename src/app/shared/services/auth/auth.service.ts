@@ -8,6 +8,7 @@ import {
   UserProfileResponse,
 } from 'src/app/core/interface/auth';
 import { CookieStorage } from 'src/app/core/utils/cookie';
+import { FontsizeService } from '../fontSize/fontsize.service';
 import { HttpClientService } from '../httpClient/http-client.service';
 import { LanguageService } from '../language/language-service.service';
 
@@ -21,7 +22,8 @@ export class AuthService {
   constructor(
     private httpClient: HttpClientService,
     private cookieStorage: CookieStorage,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private fontSizeSerive: FontsizeService
   ) {}
 
   setUserInfo(user: UserInfoResponse) {
@@ -36,7 +38,7 @@ export class AuthService {
     const token: string | null = this.cookieStorage.getCookie('token') || '';
     let country = 'tw';
     return {
-      'content-type': "application/json",
+      'content-type': 'application/json',
       'x-country-code': country,
       Authorization: `Bearer ${token}`,
     };
@@ -63,19 +65,40 @@ export class AuthService {
   getUserInfo(): Observable<UserInfoResponse> {
     return this.httpClient
       .post<UserInfoResponse>('/user-service/oauth/info', {})
-      .pipe(
-        map((response) => {
-          this.cookieStorage.setCookie('lang', response.data.userProfile.language);
-          this.languageService.setLanguage(response.data.userProfile.language as string);
-          return response;
-        })
-      );
+      .pipe();
   }
 
   getUserProfile(): Observable<UserProfileResponse> {
     return this.httpClient
       .post<UserInfoResponse>('/user-service/oauth/profile/gets', {})
-      .pipe();
+      .pipe(
+        map((response) => {
+          let language = response.data.language;
+          let fontSize = "";
+          console.log(response);
+
+          switch (response.data.fontSize) {
+            case "0":
+              fontSize = "1rem"
+              break;
+            case "1":
+              fontSize = "1.1rem"
+              break;
+            case "2":
+              fontSize = "1.2rem"
+              break;
+            case "3":
+              fontSize = "1.3rem"
+              break;
+            default:
+              break;
+          }
+          this.cookieStorage.setCookie('lang', language);
+          this.languageService.setLanguage(language as string);
+          this.fontSizeSerive.setFontsize(fontSize);
+          return response;
+        })
+      );
   }
 
   updateUserProfile(params: object): Observable<UserProfileResponse> {

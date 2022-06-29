@@ -22,6 +22,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CookieStorage } from 'src/app/core/utils/cookie';
 import { LanguageService } from 'src/app/shared/services/language/language-service.service';
 import { Router } from '@angular/router';
+import { FontsizeService } from 'src/app/shared/services/fontSize/fontsize.service';
 @Component({
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
@@ -72,6 +73,7 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
     private translate: TranslateService,
     private cookieStorage: CookieStorage,
     private languageService: LanguageService,
+    private fontSizeService: FontsizeService,
     private router: Router
   ) {}
 
@@ -86,9 +88,11 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
     this.authService
       .getUserInfo()
       .subscribe((res) => this.authService.setUserInfo(res));
+
     this.authService
       .getUserProfile()
       .subscribe((res) => this.authService.setUserProfile(res));
+
     this.notifyService.getNotification().subscribe((res) => {
       if (res.meta) {
         this.totalPage = res.meta.totalPages;
@@ -97,6 +101,7 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
       }
       this.notifyService.setNotifycation(res);
     });
+
     this.notifyService
       .getCountNoticationUnRead()
       .subscribe((res) => (this.countNotiUnRead = res.data));
@@ -104,11 +109,20 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
     this.authService.userInfo$.subscribe((res) => {
       this.userInfo = res;
     });
+
     this.authService.userProfile$.subscribe((res) => {
       this.userProfile = res;
     });
+
     this.notifyService.notification$.subscribe((res) => {
       this.notification = res;
+    });
+
+    this.fontSizeService.fontSize$.subscribe((fontSize) => {
+      if (fontSize) {
+        this.fontZoom = fontSize;
+        this.handleFontZoom(fontSize);
+      }
     });
   }
 
@@ -171,17 +185,14 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
   }
 
   handleChangeLanguage(e: Event) {
-    let currentData = this.userInfo?.data.userProfile;
-    let updateData = { ...currentData, language: e.toString() };
-
     this.authService
-      .updateUserProfile(updateData)
+      .updateUserProfile({ language: e.toString() })
       .subscribe((res) => console.log(res));
     this.languageService.setLanguage(e.toString());
     this.cookieStorage.setCookie('lang', e.toString());
   }
 
-  handleFontZoom(e: Event | any) {
+  handleFontZoom(e: Event | string) {
     this.fontZoom = e.toString();
     let text: any = document.querySelectorAll('.text');
     for (let index = 0; index < text.length; index++) {
