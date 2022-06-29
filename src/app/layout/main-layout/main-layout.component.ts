@@ -121,7 +121,7 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
     this.fontSizeService.fontSize$.subscribe((fontSize) => {
       if (fontSize) {
         this.fontZoom = fontSize;
-        this.handleFontZoom(fontSize);
+        this.handleFontZoom(fontSize, 'getFirst');
       }
     });
   }
@@ -192,11 +192,34 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
     this.cookieStorage.setCookie('lang', e.toString());
   }
 
-  handleFontZoom(e: Event | string) {
-    this.fontZoom = e.toString();
+  handleFontZoom(e: Event | string, first?: string) {
+    let fontSize = "0";
     let text: any = document.querySelectorAll('.text');
-    for (let index = 0; index < text.length; index++) {
-      text[index].style.fontSize = e.toString();
+    let language = this.cookieStorage.getCookie("lang");
+    this.fontZoom = e.toString();
+    switch (e.toString()) {
+      case '1rem':
+        fontSize = "0";
+        break;
+      case '1.1rem':
+        fontSize = "1";
+        break;
+      case '1.2rem':
+        fontSize = "2";
+        break;
+      case '1.3rem':
+        fontSize = "3";
+        break;
+    }
+    if (first) {
+      for (let index = 0; index < text.length; index++) {
+        text[index].style.fontSize = e.toString();
+      }
+    } else {
+      this.authService.updateUserProfile({ fontSize, language }).subscribe(res => console.log(res));
+      for (let index = 0; index < text.length; index++) {
+        text[index].style.fontSize = e.toString();
+      }
     }
   }
 
