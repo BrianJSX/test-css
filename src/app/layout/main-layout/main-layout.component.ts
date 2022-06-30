@@ -23,6 +23,7 @@ import { CookieStorage } from 'src/app/core/utils/cookie';
 import { LanguageService } from 'src/app/shared/services/language/language-service.service';
 import { Router } from '@angular/router';
 import { FontsizeService } from 'src/app/shared/services/fontSize/fontsize.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
@@ -75,6 +76,7 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
     private cookieStorage: CookieStorage,
     private languageService: LanguageService,
     private fontSizeService: FontsizeService,
+    private message: NzMessageService,
     private router: Router
   ) {}
 
@@ -150,6 +152,10 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
     });
   }
 
+  createMessage(type: string): void {
+    this.message.create(type, `${type}`);
+  }
+
   handleOpenProfile() {
     this.openProfile = true;
     this.handleZoomUserProfile();
@@ -188,33 +194,35 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
   handleChangeLanguage(e: Event) {
     this.authService
       .updateUserProfile({ language: e.toString() })
-      .subscribe((res) => console.log(res));
+      .subscribe((res) => this.createMessage("success"));
     this.languageService.setLanguage(e.toString());
     this.cookieStorage.setCookie('lang', e.toString());
   }
 
   handleFontZoom(e: Event | string, first?: string) {
-    let fontSize = "0";
-    let language = this.cookieStorage.getCookie("lang");
+    let fontSize = '0';
+    let language = this.cookieStorage.getCookie('lang');
     this.fontZoom = e.toString();
     switch (e.toString()) {
       case '1rem':
-        fontSize = "0";
+        fontSize = '0';
         break;
       case '1.1rem':
-        fontSize = "1";
+        fontSize = '1';
         break;
       case '1.2rem':
-        fontSize = "2";
+        fontSize = '2';
         break;
       case '1.3rem':
-        fontSize = "3";
+        fontSize = '3';
         break;
     }
     if (first) {
       this.refcontent.nativeElement.style.fontSize = e.toString();
     } else {
-      this.authService.updateUserProfile({ fontSize, language }).subscribe(res => console.log(res));
+      this.authService
+        .updateUserProfile({ fontSize, language })
+        .subscribe((res) => this.createMessage("success"));
       this.refcontent.nativeElement.style.fontSize = e.toString();
     }
   }

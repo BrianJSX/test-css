@@ -6,30 +6,6 @@ html {
   height: 100%;
 }
 
-.ant-select-dropdown {
-  border-radius: 20px !important;
-  background-color: #1a457b !important;
-}
-.ant-popover-inner-content {
-  border-radius: 20px !important;
-}
-
-.ant-menu-item-selected {
-  background-color: #1a457b !important;
-  border-right: none !important;
-  color: black !important;
-  border-radius: 5px;
-  color: white !important;
-}
-
-.ant-menu-item-selected::after {
-  all: unset;
-}
-
-.ant-menu-submenu-title:hover {
-  all: unset;
-}
-
 .icon {
   width: 1.8em;
   height: 1.8em;

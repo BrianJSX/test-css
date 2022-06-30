@@ -31,6 +31,8 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import { FontsizeDirective } from './layout/main-layout/directive/fontsize.directive'
+import { NzMessageModule } from 'ng-zorro-antd/message';
+
 
 registerLocaleData(en);
 export function HttpLoaderFactory(http: HttpClient) {
@@ -47,6 +49,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FontsizeDirective,
   ],
   imports: [
+    NzMessageModule,
     ScrollingModule,
     InfiniteScrollModule,
     NzMenuModule,
