@@ -499,7 +499,7 @@
                   (click)="handleSwitchCountry()"
                 >
                   {{ "login.SWITCH_COUNTRY" | translate }}
-              </div>
+                </div>
               </div>
             </div>
           </div>
@@ -508,7 +508,11 @@
     </nz-header>
     <div class="dashboard__content">
       <div class="dashboard__content__main">
-        <router-outlet></router-outlet>
+        <div class="dashboard__content__children">
+          <div class="dashboard__content__children--main" #refContent>
+            <router-outlet></router-outlet>
+          </div>
+        </div>
       </div>
     </div>
     <!-- <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer> -->

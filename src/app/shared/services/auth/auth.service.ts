@@ -75,8 +75,6 @@ export class AuthService {
         map((response) => {
           let language = response.data.language;
           let fontSize = "";
-          console.log(response);
-
           switch (response.data.fontSize) {
             case "0":
               fontSize = "1rem"

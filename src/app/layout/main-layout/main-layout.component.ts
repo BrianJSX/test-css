@@ -57,6 +57,7 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
   userProfile: UserProfileResponse | null = null;
   notification: NotificationResponse | null = null;
 
+  @ViewChild('refContent') refcontent!: ElementRef<HTMLButtonElement>;
   @ViewChild('refNotiMessage') refNotiMessage!: ElementRef<HTMLButtonElement>;
   @ViewChild('refAvatar') refAvatar: ElementRef<HTMLButtonElement> | undefined;
   @ViewChild('refPopup') refPopup: ElementRef<HTMLDivElement> | undefined;
@@ -194,7 +195,6 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
 
   handleFontZoom(e: Event | string, first?: string) {
     let fontSize = "0";
-    let text: any = document.querySelectorAll('.text');
     let language = this.cookieStorage.getCookie("lang");
     this.fontZoom = e.toString();
     switch (e.toString()) {
@@ -212,14 +212,10 @@ export class MainLayoutComponent implements OnInit, AfterViewInit {
         break;
     }
     if (first) {
-      for (let index = 0; index < text.length; index++) {
-        text[index].style.fontSize = e.toString();
-      }
+      this.refcontent.nativeElement.style.fontSize = e.toString();
     } else {
       this.authService.updateUserProfile({ fontSize, language }).subscribe(res => console.log(res));
-      for (let index = 0; index < text.length; index++) {
-        text[index].style.fontSize = e.toString();
-      }
+      this.refcontent.nativeElement.style.fontSize = e.toString();
     }
   }
 

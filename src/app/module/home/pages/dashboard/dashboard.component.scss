@@ -10,6 +10,7 @@
   flex-direction: column;
   background-color: #f0f2f5;
   &-content {
+    font-size: 100%;
     background-color: #fff;
     padding: 20px;
     height: 100%;
@@ -19,7 +20,6 @@
 
   &-title {
     display: flex;
-    font-size: 14px;
     color: #1a457b;
     font-weight: 500;
     border-bottom: 1px solid #dce6ef;
@@ -28,7 +28,9 @@
   }
 
   &-penbox {
+
     &--above {
+      font-size: 1em;
       display: flex;
       width: 100%;
       overflow-x: auto;
@@ -46,6 +48,7 @@
       }
     }
     &--down {
+      font-size: 1em;
       display: flex;
       width: 100%;
       flex-wrap: wrap;
